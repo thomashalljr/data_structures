@@ -20,30 +20,32 @@ class LinkedList
     @head = node
   end
 
-  def prepend(node)
+  def prepend(data)
     if @head.nil?
-      @head = node
+      @head = Node.new(data)
+      return
     else
       old_head = @head
-      @head = node
+      @head = Node.new(data)
       @head.next = old_head
     end
   end
 
-  def append(node)
+  def append(data)
     # Traverse through linked list until we reach node without next node
     # That's where we want to append node
 
     if @head.nil?
-      @head = node
+      @head = Node.new(data)
+      return
     else
-      current_node = @head
+      current = @head
 
-      while current_node.next != nil
-        current_node = current_node.next
+      while current.next != nil
+        current = current.next
       end
 
-      current_node.next = node
+      current.next = Node.new(data)
     end
   end
 
@@ -60,29 +62,25 @@ class LinkedList
     if @head.nil?
       return "Nothing to delete, empty list"
     else
-      current_node = @head
+      current = @head
 
-      if current_node.data == data
+      if current.data == data
         @head = @head.next
         return "Found node to delete at head so deleting head..."
       end
 
       # While there are more nodes to search,
       # keep looking for data to delete
-      while (current_node.next && current_node.next.data != data)
-        current_node = current_node.next
+      while current.next
+
+        if current.next.data == data
+          current.next = current.next.next
+          return
+        end
+
+        current = current.next
       end
 
-      if current_node.next.nil?
-        return "Couldn't find node in list"
-      end
-
-      # If data to delete is found at last node, then just disconnect it from list
-      if current_node.next.next.nil?
-        current_node.next = nil
-      else # Otherwise reconstruct list by setting next node to node after one we want to delete
-        current_node.next = current_node.next.next
-      end
     end
   end
 end
@@ -100,14 +98,14 @@ p    linked_list.head.next # Expect to be nil
 puts ""
 
 puts "Prepending #{SECOND} node to list..."
-linked_list.prepend(second_node)
+linked_list.prepend(SECOND)
 puts linked_list.head.data      # Expect to be second
 puts linked_list.head.next.data # Expect to be first
 p    linked_list.head.next.next # Expect to be nil
 puts ""
 
 puts "Appending #{THIRD} node to list..."
-linked_list.append(third_node)
+linked_list.append(THIRD)
 puts linked_list.head.data           # Expect to be second
 puts linked_list.head.next.data      # Expect to be first
 puts linked_list.head.next.next.data # Expect to be third
@@ -128,11 +126,11 @@ p linked_list.head.next              # Expect to be nil
 puts ""
 
 puts "Attempting to delete non-existent #{FOURTH} node from list..."
-puts linked_list.delete(FOURTH) # This node is non-existent, should return "Couldn't find node in list"
+linked_list.delete(FOURTH) # This node is non-existent, should return "Couldn't find node in list"
 puts ""
 
 puts "Appending #{FIFTH} node to list..."
-linked_list.append(fifth_node)
+linked_list.append(FIFTH)
 puts linked_list.head.data      # Expect to be second
 puts linked_list.head.next.data # Expect to be fifth
 p    linked_list.head.next.next # Expect to be nil
