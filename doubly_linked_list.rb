@@ -97,7 +97,7 @@ class DoublyLinkedList
 
   def reverse
     if @head.nil?
-      return "Nothing to reverse, empty list"
+      cant_reverse_empty_list
     elsif @head.next.nil?
       return self
     else
@@ -109,7 +109,31 @@ class DoublyLinkedList
         current = current.prev
       end
 
-      return reversed_list
+      reversed_list
+    end
+  end
+
+  def reverse_by_swap
+    if @head.nil?
+      cant_reverse_empty_list
+    else
+      current  = @head
+      new_head = @head
+
+      # Initialize empty list to construct reversed list
+      reversed = DoublyLinkedList.new(new_head.data)
+      reversed.delete(new_head.data)
+
+      while current != nil
+        prev         = current.prev
+        current.prev = current.next
+        current.next = prev
+        new_head     = current
+        reversed.prepend(current.data)
+        current      = current.prev
+      end
+
+      reversed
     end
   end
 
@@ -142,6 +166,10 @@ class DoublyLinkedList
     prev_data = current.prev ? current.prev.data : "nil"
 
     puts "#{index}: #{current.data} | next: #{next_data} | prev: #{prev_data}"
+  end
+
+  def cant_reverse_empty_list
+    return "Nothing to reverse, empty list"
   end
 
 end
@@ -217,6 +245,9 @@ another_doubly_linked_list.append(FOURTH)
 another_doubly_linked_list.print
 puts ""
 
+# Serialize/deserialize binary character stream to deep dup
+and_another_doubly_linked_list = Marshal.load( Marshal.dump(another_doubly_linked_list) )
+
 puts "Reversing list..."
 another_doubly_linked_list.reverse.print
 puts ""
@@ -239,4 +270,8 @@ puts ""
 
 puts "Reversing empty list..."
 puts another_doubly_linked_list.reverse
+puts ""
+
+puts "Reversing by swap method..."
+and_another_doubly_linked_list.reverse_by_swap.print
 puts ""
