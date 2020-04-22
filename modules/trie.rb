@@ -5,12 +5,12 @@ TOM    = "Tom"
 
 class Node
   attr_reader :data, :children
-  attr_accessor :isCompleteWord
+  attr_accessor :is_complete_word
 
-  def initialize(data, isCompleteWord=false)
-    @data           = data
-    @isCompleteWord = isCompleteWord
-    @children       = []
+  def initialize(data, is_complete_word=false)
+    @data             = data
+    @is_complete_word = is_complete_word
+    @children         = []
   end
 
   def add(word)
@@ -22,13 +22,13 @@ class Node
 
       if child
         if index.eql? word.length - 1
-          child.isCompleteWord = true
+          child.is_complete_word = true
           return
         end
 
         current = child
       else
-        is_full_word = false # Create separate variable to distinguish from isCompleteWord getter/setter methods
+        is_full_word = false # Create separate variable to distinguish from is_complete_word getter/setter methods
 
         if index.eql? word.length - 1
           is_full_word = true
@@ -52,7 +52,7 @@ class Node
 
       if child
         if index.eql? word.length - 1
-          if child.isCompleteWord
+          if child.is_complete_word
             return true
           else
             return false
@@ -66,16 +66,3 @@ class Node
     end
   end
 end
-
-root = Node.new("*")
-
-root.add(THOMAS)
-root.add(TOMMY)
-root.add(TOM)
-
-puts ""
-puts "Found #{THOM}: #{root.find(THOM)}"
-puts "Found #{THOMAS}: #{root.find(THOMAS)}"
-puts "Found #{TOMMY}: #{root.find(TOMMY)}"
-puts "Found #{TOM}: #{root.find(TOM)}"
-puts ""
