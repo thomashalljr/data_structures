@@ -1,9 +1,9 @@
 require_relative "./shared/linked_list_behavior.rb"
 
-module DoublyLinkedList
+module SinglyLinkedList
 
   class Node
-    attr_accessor :next, :prev
+    attr_accessor :next
     attr_reader   :data
 
     def initialize(data)
@@ -11,24 +11,26 @@ module DoublyLinkedList
     end
   end
 
-  class DoublyLinkedList
+  class SinglyLinkedList
     include LinkedListBehavior
 
-    attr_reader :head, :tail
+    attr_reader :head
 
     def initialize(data=nil)
       @head = nil
-      @tail = nil
-      set_head_and_tail(data) if data
+      set_head(data) if data
     end
+
+    #------------------#
+    # Instance methods #
+    #------------------#
 
     def prepend(data)
       if @head.nil?
-        set_head_and_tail(data)
+        set_head(data)
       else
         old_head = @head
         @head = Node.new(data)
-        old_head.prev = @head
         @head.next = old_head
       end
     end
@@ -38,7 +40,7 @@ module DoublyLinkedList
       # That's where we want to append node
 
       if @head.nil?
-        set_head_and_tail(data)
+        set_head(data)
       else
         current = @head
 
@@ -47,8 +49,6 @@ module DoublyLinkedList
         end
 
         current.next = Node.new(data)
-        current.next.prev = current
-        @tail = current.next
       end
     end
 
@@ -63,13 +63,13 @@ module DoublyLinkedList
       # 4) Data can't be found in list
 
       if @head.nil?
-        return "Nothing to delete, empty list"
+        return puts "Nothing to delete, empty list"
       else
         current = @head
 
         if current.data == data
-          reset_head_and_tail
-          return "Found node to delete at head so deleting head..."
+          delete_head
+          return puts "Found node to delete at head so deleting head..."
         end
 
         # While there are more nodes to search,
@@ -77,32 +77,42 @@ module DoublyLinkedList
         while current.next
 
           if current.next.data == data
-
-            if current.next == @tail
-              @tail = @tail.prev
-              @tail.next = nil
-              return
-            end
-
             current.next = current.next.next
-            current.next.prev = current
             return
           end
 
           current = current.next
         end
 
-        return "Couldn't find node in list"
+        return puts "Couldn't find node in list"
       end
     end
 
     def remove
       if @head.nil?
-        return "Nothing to remove, empty list"
+        return puts "Nothing to remove, empty list"
       else
         removed = @head
-        reset_head_and_tail
+        delete_head
         removed
+      end
+    end
+
+    def reverse_using_new_list
+      if @head.nil?
+        cant_reverse_empty_list
+      elsif @head.next.nil?
+        return_self
+      else
+        current  = @head
+        reversed = SinglyLinkedList.new
+
+        while current
+          reversed.prepend(current.data)
+          current = current.next
+        end
+
+        reversed
       end
     end
 
@@ -110,59 +120,57 @@ module DoublyLinkedList
       if @head.nil?
         cant_reverse_empty_list
       elsif @head.next.nil?
-        return self
-      else
-        current = @tail
-        reversed_list = DoublyLinkedList.new(current.data)
-
-        while current.prev != nil
-          reversed_list.append(current.prev.data)
-          current = current.prev
-        end
-
-        reversed_list
-      end
-    end
-
-    def reverse_by_swap
-      if @head.nil?
-        cant_reverse_empty_list
+        return_self
       else
         current = @head
+        previous = nil
 
-        while current != nil
-          old_next     = current.next
-          current.next = current.prev
-          current.prev = old_next
-          current      = old_next
+        while current
+          next_node    = current.next
+          # Below works when previous is nil because first node will be
+          # last node and last node's next should be nil
+          current.next = previous
+          previous     = current
+          current      = next_node
         end
 
-        old_tail = @tail
-        @tail    = @head
-        @head    = old_tail
+        previous # new head
       end
     end
 
-    def set_head_and_tail(data)
+    def set_head(data)
       @head = Node.new(data)
-      @tail = @head
     end
 
-    def reset_head_and_tail
+    def delete_head
       @head = @head.next
-      @head.prev = nil if !@head.nil?
-      if @head.nil?
-        @tail = @head
+    end
+
+    #---------------#
+    # Class methods #
+    #---------------#
+
+    def self.print_using(list, node)
+      current = node
+      index   = 1
+
+      while current
+        list.send(:print_node, index, current)
+        current = current.next
+        index  += 1
       end
     end
+
+    #-----------------#
+    # Private methods #
+    #-----------------#
 
     private
 
     def print_node(index, current)
       next_data = current.next ? current.next.data : "nil"
-      prev_data = current.prev ? current.prev.data : "nil"
 
-      puts "#{index}: #{current.data} | next: #{next_data} | prev: #{prev_data}"
+      puts "#{index}: #{current.data} | next: #{next_data}"
     end
 
   end

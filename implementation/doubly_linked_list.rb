@@ -1,73 +1,73 @@
 require_relative "../modules/doubly_linked_list.rb"
 
 puts ""
-puts "Initializing list with #{DoublyLinkedList::FIRST}..."
-linked_list = DoublyLinkedList::DoublyLinkedList.new(DoublyLinkedList::FIRST)
+puts "Initializing list with #{LinkedListBehavior::FIRST}..."
+linked_list = DoublyLinkedList::DoublyLinkedList.new(LinkedListBehavior::FIRST)
 linked_list.print
 puts ""
 
-puts "Prepending #{DoublyLinkedList::SECOND} to list..."
-linked_list.prepend(DoublyLinkedList::SECOND)
+puts "Prepending #{LinkedListBehavior::SECOND} to list..."
+linked_list.prepend(LinkedListBehavior::SECOND)
 linked_list.print
 puts ""
 
-puts "Appending #{DoublyLinkedList::THIRD} to list..."
-linked_list.append(DoublyLinkedList::THIRD)
+puts "Appending #{LinkedListBehavior::THIRD} to list..."
+linked_list.append(LinkedListBehavior::THIRD)
 linked_list.print
 puts ""
 
-puts "Deleting #{DoublyLinkedList::FIRST} from list..."
-linked_list.delete(DoublyLinkedList::FIRST)
+puts "Deleting #{LinkedListBehavior::FIRST} from list..."
+linked_list.delete(LinkedListBehavior::FIRST)
 linked_list.print
 puts ""
 
-puts "Deleting #{DoublyLinkedList::THIRD} from list..."
-linked_list.delete(DoublyLinkedList::THIRD)
+puts "Deleting #{LinkedListBehavior::THIRD} from list..."
+linked_list.delete(LinkedListBehavior::THIRD)
 linked_list.print
 puts ""
 
-puts "Attempting to delete non-existent #{DoublyLinkedList::FOURTH} from list..."
-puts linked_list.delete(DoublyLinkedList::FOURTH)
+puts "Attempting to delete non-existent #{LinkedListBehavior::FOURTH} from list..."
+puts linked_list.delete(LinkedListBehavior::FOURTH)
 puts ""
 
-puts "Appending #{DoublyLinkedList::FIFTH} to list..."
-linked_list.append(DoublyLinkedList::FIFTH)
+puts "Appending #{LinkedListBehavior::FIFTH} to list..."
+linked_list.append(LinkedListBehavior::FIFTH)
 linked_list.print
 puts ""
 
-puts "Deleting #{DoublyLinkedList::SECOND} from list..."
-puts linked_list.delete(DoublyLinkedList::SECOND)
+puts "Deleting #{LinkedListBehavior::SECOND} from list..."
+puts linked_list.delete(LinkedListBehavior::SECOND)
 linked_list.print
 puts ""
 
 puts "Initializing doubly linked list..."
-doubly_linked_list = DoublyLinkedList::DoublyLinkedList.new(DoublyLinkedList::SECOND)
-doubly_linked_list.prepend(DoublyLinkedList::FIRST)
-doubly_linked_list.append(DoublyLinkedList::THIRD)
-doubly_linked_list.append(DoublyLinkedList::FOURTH)
+doubly_linked_list = DoublyLinkedList::DoublyLinkedList.new(LinkedListBehavior::SECOND)
+doubly_linked_list.prepend(LinkedListBehavior::FIRST)
+doubly_linked_list.append(LinkedListBehavior::THIRD)
+doubly_linked_list.append(LinkedListBehavior::FOURTH)
 doubly_linked_list.print
 puts ""
 
 puts "Deleting head from list..."
-doubly_linked_list.delete(DoublyLinkedList::FIRST)
+doubly_linked_list.delete(LinkedListBehavior::FIRST)
 doubly_linked_list.print
 puts ""
 
-puts "Deleting #{DoublyLinkedList::THIRD} from list..."
-doubly_linked_list.delete(DoublyLinkedList::THIRD)
+puts "Deleting #{LinkedListBehavior::THIRD} from list..."
+doubly_linked_list.delete(LinkedListBehavior::THIRD)
 doubly_linked_list.print
 puts ""
 
-puts "Deleting #{DoublyLinkedList::FOURTH} from list..."
-doubly_linked_list.delete(DoublyLinkedList::FOURTH)
+puts "Deleting #{LinkedListBehavior::FOURTH} from list..."
+doubly_linked_list.delete(LinkedListBehavior::FOURTH)
 doubly_linked_list.print
 puts ""
 
 puts "Initializing doubly linked list to reverse..."
-another_doubly_linked_list = DoublyLinkedList::DoublyLinkedList.new(DoublyLinkedList::SECOND)
-another_doubly_linked_list.prepend(DoublyLinkedList::FIRST)
-another_doubly_linked_list.append(DoublyLinkedList::THIRD)
-another_doubly_linked_list.append(DoublyLinkedList::FOURTH)
+another_doubly_linked_list = DoublyLinkedList::DoublyLinkedList.new(LinkedListBehavior::SECOND)
+another_doubly_linked_list.prepend(LinkedListBehavior::FIRST)
+another_doubly_linked_list.append(LinkedListBehavior::THIRD)
+another_doubly_linked_list.append(LinkedListBehavior::FOURTH)
 another_doubly_linked_list.print
 puts ""
 
@@ -83,10 +83,10 @@ and_another_doubly_linked_list.reverse_by_swap
 and_another_doubly_linked_list.print
 puts ""
 
-puts "Deleting all but #{DoublyLinkedList::THIRD} from reversed list..."
-another_doubly_linked_list.delete(DoublyLinkedList::FIRST)
-another_doubly_linked_list.delete(DoublyLinkedList::SECOND)
-another_doubly_linked_list.delete(DoublyLinkedList::FOURTH)
+puts "Deleting all but #{LinkedListBehavior::THIRD} from reversed list..."
+another_doubly_linked_list.delete(LinkedListBehavior::FIRST)
+another_doubly_linked_list.delete(LinkedListBehavior::SECOND)
+another_doubly_linked_list.delete(LinkedListBehavior::FOURTH)
 another_doubly_linked_list.print
 puts ""
 
@@ -94,15 +94,15 @@ puts "Reversing list of single node..."
 another_doubly_linked_list.reverse.print
 puts ""
 
-puts "Deleting #{DoublyLinkedList::THIRD} from reversed list..."
-another_doubly_linked_list.delete(DoublyLinkedList::THIRD)
+puts "Deleting #{LinkedListBehavior::THIRD} from reversed list..."
+another_doubly_linked_list.delete(LinkedListBehavior::THIRD)
 another_doubly_linked_list.print
 puts "head is nil?: #{another_doubly_linked_list.head.nil?}"
 puts "tail is nil?: #{another_doubly_linked_list.tail.nil?}"
 puts ""
 
 puts "Reversing empty list..."
-puts another_doubly_linked_list.reverse
+another_doubly_linked_list.reverse
 puts ""
 
 puts "Removing node from head of list..."
@@ -142,9 +142,9 @@ end
 puts ""
 
 puts "Testing method each on non-empty list..."
-and_another_doubly_linked_list.append(DoublyLinkedList::SECOND)
-and_another_doubly_linked_list.append(DoublyLinkedList::THIRD)
-and_another_doubly_linked_list.append(DoublyLinkedList::FOURTH)
+and_another_doubly_linked_list.append(LinkedListBehavior::SECOND)
+and_another_doubly_linked_list.append(LinkedListBehavior::THIRD)
+and_another_doubly_linked_list.append(LinkedListBehavior::FOURTH)
 and_another_doubly_linked_list.each do |node|
   puts "node: #{node.data}"
 end
